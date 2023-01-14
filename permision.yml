@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Configure AWS SSO Account Assignment
+
+Parameters: 
+  pAwsSsoInsanceArn: 
+    Type: String
+    Default: 'arn:aws:sso:::instance/'
+    Description: 'Specify your AWS SSO Instance ARN.'
+
+
+Resources:
+  rPermissionSetAdministratorAccess:
+    Type: AWS::SSO::PermissionSet
+    Properties:
+      InstanceArn: !Ref pAwsSsoInsanceArn
+      Name: 'AdministratorAccess'
+      ManagedPolicies:
+        - 'arn:aws:iam::aws:policy/AdministratorAccess'
+
+  rPermissionSetSecurityAudit:
+    Type: AWS::SSO::PermissionSet
+    Properties:
+      InstanceArn: !Ref pAwsSsoInsanceArn
+      Name: 'SecurityAudit'
+      ManagedPolicies:
+        - 'arn:aws:iam::aws:policy/SecurityAudit'
+
+  rPermissionSetViewOnlyAccess:
+    Type: AWS::SSO::PermissionSet
+    Properties:
+      InstanceArn: !Ref pAwsSsoInsanceArn
+      Name: 'ViewOnlyAccess'
+      ManagedPolicies:
+        - 'arn:aws:iam::aws:policy/job-function/ViewOnlyAccess'
